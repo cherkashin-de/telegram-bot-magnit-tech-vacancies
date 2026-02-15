@@ -1,0 +1,41 @@
+networks:
+  my-networks:
+    driver: bridge
+
+volumes:
+  db-data:
+
+services:
+
+  postgres:
+    container_name: pg_db
+    image: postgres:13.22
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - my-networks
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      NAME_CONTAINER_DB: ${NAME_CONTAINER_DB}
+      MAGNIT_TECH_VACANCIES_URL: ${MAGNIT_TECH_VACANCIES_URL}
+      MAGNIT_TECH_VACANCY_URL: ${MAGNIT_TECH_VACANCY_URL}
+      TELEGRAM_TOKEN: ${TELEGRAM_TOKEN}
+      TELEGRAM_BOT_USER_NAME: ${TELEGRAM_BOT_USER_NAME}
+    depends_on:
+      - postgres
+    networks:
+      - my-networks

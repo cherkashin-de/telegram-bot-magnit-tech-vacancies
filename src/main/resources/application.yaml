@@ -1,0 +1,26 @@
+app:
+  magnit_tech_vacancies_url: ${MAGNIT_TECH_VACANCIES_URL:https://magnit.tech/api/v1/vacancy}
+  magnit_tech_vacancy_url: ${MAGNIT_TECH_VACANCY_URL:https://magnit.tech/vacancies/}
+  max_size_page_vacancies: 20
+  telegram:
+    token: ${TELEGRAM_TOKEN:YOUR-TOKEN}
+    name: ${TELEGRAM_BOT_USER_NAME:YOUR_BOT}
+
+spring:
+  datasource:
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:Qwerty1234}
+    url: jdbc:postgresql://${NAME_CONTAINER_DB:localhost}:5432/${POSTGRES_DB:telegram_bot}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      pool-name: telegramBotPool
+      connection-timeout: 20000    # ожидание свободного соединения 20 сек
+      initialization-fail-timeout: -1  # не падать при старте, пробовать снова
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    loggers: slf4j
+    table: flyway_schema_history
