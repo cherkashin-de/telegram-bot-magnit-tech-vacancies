@@ -23,7 +23,7 @@ services:
       - db-data:/var/lib/postgresql/data
 
   app:
-    build: .
+    image: telegram-bot-magnit-tech:latest
     ports:
       - "8080:8080"
     environment:
