@@ -71,8 +71,8 @@ public class NotificationService {
                                     .parseMode("HTML")
                                     .build(),
                             null);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
+                } catch (TelegramApiException ignored) {
+                    log.error(ignored.getMessage());
                 }
         });
     }
