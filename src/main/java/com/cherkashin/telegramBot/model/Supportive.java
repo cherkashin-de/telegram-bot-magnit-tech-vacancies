@@ -69,6 +69,8 @@ public enum Supportive {
                 Long id,
                 @JsonProperty("foreign_id") Long fId,
                 String title,
+                @JsonProperty("is_internship")
+                boolean isInternship,
                 String location,
                 Direction direction,
                 Speciality speciality,
